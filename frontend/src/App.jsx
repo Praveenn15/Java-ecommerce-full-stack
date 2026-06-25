@@ -1,65 +1,135 @@
-import { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API_URL = 'https://java-ecommerce.onrender.com/api/products';
 
-function App() {
-  const[products ,setProducts] = useState([]);
-  const[productName, setProductName] = useState(" ");
+export default function App() {
+  const [products, setProducts] = useState([]);
+  const [search, setSearch] = useState('');
+  
+  // combined state of form for all 
+  const [form, setForm] = useState({
+    name: '',
+    description: '',
+    price: '',
+    stock: '',
+    imageUrl: '', 
+    category: { id: 1 }
+  });
 
-  // Getting prodcts from live backend
-  const fetchProducts = () => {
-    axios.get('https://java-ecommerce.onrender.com/api/products')
-    .then((res) => setProducts(res.data))
-    .catch((err) => console.error("Error fetching products:", err));
+  // 🔄 for getting data from backend
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(`${API_URL}?search=${search}`);
+      setProducts(response.data);
+    } catch (error) {
+      console.error("Error fetching data", error);
+    }
   };
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [search]);
 
-  // Add new products
-  const handleAddProducts = (e) => {
+  // ⌨️ Single handler for changing all input boxes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'categoryId') {
+      setForm({ ...form, category: { id: parseInt(value) } });
+    } else {
+      setForm({ ...form, [name]: value });
+    }
+  };
+
+  // 📤  for Adding new products
+  const handleAddProduct = async (e) => {
     e.preventDefault();
-    if (!productName) return;
+    if (!form.name || !form.price) return alert("Name and Price are required!");
+    try {
+      await axios.post(API_URL, form);
+      // clear the form again
+      setForm({ name: '', description: '', price: '', stock: '', imageUrl: '', category: { id: 1 } }); 
+      fetchProducts(); // for instant refresh
+    } catch (error) {
+      console.error("Error adding product", error);
+    }
+  };
 
-    axios.post('https://java-ecommerce.onrender.com/api/products',{
-      name: productName
-    })
-    .then(() => {
-      setProductName('');
-      fetchProducts();  // Instant list refresh 
-    })
-    .catch((err) => console.error("Error adding products",err));
+  // 🗑️ 
+  const handleDelete = async (id) => {
+    if (window.confirm("क्या आप सच में इस प्रोडक्ट को डिलीट करना चाहते हैं?")) {
+      try {
+        await axios.delete(`${API_URL}/${id}`);
+        fetchProducts(); // for instant refresh
+      } catch (error) {
+        console.error("Error deleting product", error);
+      }
+    }
   };
 
   return (
-    <div style={{maxWidth:'500px', margin: '50px auto',padding: '20px',border: '1px solid #ddd',borderRadius: '8px', boxShadow:' 0 4px 6px rgba(0,0,0,0.1'}}>
-      <h2 style={{textAlign:'center',color:'#333' }}> 🛒 Product management (Live)</h2>
-      {/*Adding project form */}
-      <form onSubmit={handleAddProducts} style={{display: 'flex', gap:'10px',marginBottom: '20px'}}>
-        <input type="text" placeholder="Enter product name" value={productName} onChange={(e) => setProductName(e.target.value)} style={{flex: 1, padding: '10px',borderRadius:'4px',border: '1px solid #ccc'}}
-        />
-        <button type="submit" style={{padding:'10px 15px', background:'#007bff',color:'#fff',border:'none',borderRadius:'4px',cursor:'pointer',fontWeight:'bold'}}>
-          Add
-        </button>
-      </form>
-      {/* List of Products*/}
-      <h3 style={{ color:'#555'}}>Available Products:</h3>
-      {products.length === 0 ? (
-        <p style={{color:'#888'}}>No proucts found.Add one above!</p>):
-        (
-          <ul style={{listStyleType:'none',padding: 0}}>
-{products.map((prod,index) => (
-            <li key={index} style={{display:'flex',justifyContent:'space-between',padding:'12px 20px' ,fontSize:'16px',background:' #fff',margin:'15px 0',border:'1px solid #ccc',borderRadius:'10px',marginBottom:'12px'}}>
-              <span style={{fontWeight:'600', color:'#1e293b',textTransform:'capitalize'}}>{prod.name}</span>
-              <span>{prod.category ? prod.category.name :'Electroincs'}</span>
+    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto', fontFamily: 'sans-serif' }}>
+      <h2 style={{ textAlign: 'center', color: '#333' }}>🛒 Advanced E-Commerce Panel</h2>
 
-             {/* RAW DATA: <code>{JSON.stringify(prod)}</code> */}
-            </li>
-          ))}</ul>
+      {/* 🔍 Live search bar*/}
+      <input 
+        type="text" 
+        placeholder="🔍 Search products here..." 
+        value={search} 
+        onChange={(e) => setSearch(e.target.value)}
+        style={{ width: '100%', padding: '12px', marginBottom: '20px', borderRadius: '8px', border: '1px solid #ccc', boxSizing: 'border-box' }}
+      />
+
+      {/* ➕ New product adding form*/}
+      <form onSubmit={handleAddProduct} style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '20px', border: '1px solid #ddd', borderRadius: '10px', backgroundColor: '#f9f9f9', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
+        <h3 style={{ margin: '0 0 10px 0', color: '#007bff' }}>Add New Product</h3>
+        <input type="text" name="name" placeholder="Product Name *" value={form.name} onChange={handleChange} required style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
+        <input type="text" name="description" placeholder="Description" value={form.description} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
+        <input type="number" name="price" placeholder="Price (₹) *" value={form.price} onChange={handleChange} required style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
+        <input type="number" name="stock" placeholder="Stock Count" value={form.stock} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
+        <input type="text" name="imageUrl" placeholder="Paste Image URL here (https://...)" value={form.imageUrl} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
+        
+        <label style={{ fontWeight: 'bold', fontSize: '14px', color: '#555' }}>Select Category:</label>
+        <select name="categoryId" onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc', backgroundColor: '#fff' }}>
+          <option value="1">Electronics</option>
+          <option value="2">Clothing</option>
+          <option value="3">Books</option>
+        </select>
+
+        <button type="submit" style={{ padding: '12px', background: '#007bff', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '16px' }}>Add Product</button>
+      </form>
+
+      {/* 📋 List of products */}
+      <h3 style={{ marginTop: '25px', color: '#333' }}>Available Products:</h3>
+      {products.length === 0 ? <p style={{ color: '#888', textAlign: 'center' }}>No products found!</p> : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+          {products.map(product => (
+            <div key={product.id} style={{ padding: '15px', border: '1px solid #eee', borderRadius: '10px', display: 'flex', gap: '15px', alignItems: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', backgroundColor: '#fff' }}>
+              
+              {/* 📸 Image of products */}
+              <img 
+                src={product.imageUrl || 'https://via.placeholder.com/80?text=No+Image'} 
+                alt={product.name} 
+                style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #ddd' }} 
+              />
+
+              <div style={{ flex: 1 }}>
+                <strong style={{ fontSize: '18px', color: '#222' }}>{product.name}</strong> 
+                <span style={{ fontSize: '11px', background: '#e0e0e0', color: '#333', padding: '3px 8px', borderRadius: '4px', marginLeft: '10px', fontWeight: 'bold' }}>
+                  {product.category?.name || 'General'}
+                </span>
+                <p style={{ margin: '6px 0', fontSize: '14px', color: '#666' }}>{product.description}</p>
+                <div style={{ fontSize: '15px' }}>
+                  <span style={{ color: '#28a745', fontWeight: 'bold', fontSize: '16px' }}>₹{product.price}</span> 
+                  <span style={{ color: '#ccc', margin: '0 10px' }}>|</span> 
+                  <span>Stock: {product.stock || 0}</span>
+                </div>
+              </div>
+              
+              <button onClick={() => handleDelete(product.id)} style={{ background: '#dc3545', color: 'white', border: 'none', padding: '8px 14px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}>Delete</button>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
-
 }
-
-export default App
