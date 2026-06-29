@@ -13,6 +13,7 @@ public class Product {
     private String description;
     private double price;
     private String imageurl;
+    private int stock;
 // One Category can have many Products
     @ManyToOne
     @JoinColumn(name = "category_id")

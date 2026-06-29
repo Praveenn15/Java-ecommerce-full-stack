@@ -86,7 +86,7 @@ export default function App() {
         <input type="text" name="description" placeholder="Description" value={form.description} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
         <input type="number" name="price" placeholder="Price (₹) *" value={form.price} onChange={handleChange} required style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
         <input type="number" name="stock" placeholder="Stock Count" value={form.stock} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
-        <input type="text" name="imageUrl" placeholder="Paste Image URL here (https://...)" value={form.imageUrl} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
+        <input type="text" name="imageUrl" placeholder="Paste Image URL here (https://...)" value={form.imageurl} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
         
         <label style={{ fontWeight: 'bold', fontSize: '14px', color: '#555' }}>Select Category:</label>
         <select name="categoryId" onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc', backgroundColor: '#fff' }}>
@@ -107,9 +107,9 @@ export default function App() {
               
               {/* 📸 Image of products */}
               <img 
-                src={product.imageUrl || 'https://via.placeholder.com/80?text=No+Image'} 
+                src={product.imageurl || 'https://via.placeholder.com/80?text=No+Image'} 
                 alt={product.name} 
-                style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #ddd' }} 
+                style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #251e1e' }} 
               />
 
               <div style={{ flex: 1 }}>
