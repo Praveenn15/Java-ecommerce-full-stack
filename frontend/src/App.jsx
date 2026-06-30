@@ -13,7 +13,7 @@ export default function App() {
     description: '',
     price: '',
     stock: '',
-    imageUrl: '', 
+    imageurl: '', 
     category: { id: 1 }
   });
 
@@ -47,7 +47,7 @@ export default function App() {
     try {
       await axios.post(API_URL, form);
       // clear the form again
-      setForm({ name: '', description: '', price: '', stock: '', imageUrl: '', category: { id: 1 } }); 
+      setForm({ name: '', description: '', price: '', stock: '', imageurl: '', category: { id: 1 } }); 
       fetchProducts(); // for instant refresh
     } catch (error) {
       console.error("Error adding product", error);
@@ -86,7 +86,7 @@ export default function App() {
         <input type="text" name="description" placeholder="Description" value={form.description} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
         <input type="number" name="price" placeholder="Price (₹) *" value={form.price} onChange={handleChange} required style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
         <input type="number" name="stock" placeholder="Stock Count" value={form.stock} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
-        <input type="text" name="imageUrl" placeholder="Paste Image URL here (https://...)" value={form.imageurl} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
+        <input type="text" name="imageurl" placeholder="Paste Image URL here (https://...)" value={form.imageurl} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
         
         <label style={{ fontWeight: 'bold', fontSize: '14px', color: '#555' }}>Select Category:</label>
         <select name="categoryId" onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc', backgroundColor: '#fff' }}>
@@ -111,7 +111,6 @@ export default function App() {
                 alt={product.name} 
                 style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #251e1e' }} 
               />
-
               <div style={{ flex: 1 }}>
                 <strong style={{ fontSize: '18px', color: '#222' }}>{product.name}</strong> 
                 <span style={{ fontSize: '11px', background: '#e0e0e0', color: '#333', padding: '3px 8px', borderRadius: '4px', marginLeft: '10px', fontWeight: 'bold' }}>
