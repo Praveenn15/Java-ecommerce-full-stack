@@ -39,6 +39,21 @@ export default function App() {
       setForm({ ...form, [name]: value });
     }
   };
+  const handleFileChange = (e) => {
+    // Grab the  fisrt file user selected
+    const file = e.target.files[0];
+    if (file) {
+      // Create a scanner tool or its Read raw files(images,pdf etc.)
+       const reader = new FileReader();
+       
+       //this EVENT LISTNER define what happens when Scanning is fineshed
+       reader.onloadend = () => {
+        setForm({ ...form, imageurl: reader.result});
+       };
+       //start the scan or  read img  translate into masive string text known as (Base64 str)
+       reader.readAsDataURL(file);
+    }
+  };
 
   // 📤  for Adding new products
   const handleAddProduct = async (e) => {
@@ -86,7 +101,7 @@ export default function App() {
         <input type="text" name="description" placeholder="Description" value={form.description} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
         <input type="number" name="price" placeholder="Price (₹) *" value={form.price} onChange={handleChange} required style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
         <input type="number" name="stock" placeholder="Stock Count" value={form.stock} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
-        <input type="text" name="imageurl" placeholder="Paste Image URL here (https://...)" value={form.imageurl} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
+        <input type="file" accept="image/*" onChange={handleFileChange} placeholder="Upload your product img" value={form.imageurl} onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
         
         <label style={{ fontWeight: 'bold', fontSize: '14px', color: '#555' }}>Select Category:</label>
         <select name="categoryId" onChange={handleChange} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc', backgroundColor: '#fff' }}>

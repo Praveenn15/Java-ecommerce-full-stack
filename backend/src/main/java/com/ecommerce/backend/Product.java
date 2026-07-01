@@ -12,6 +12,8 @@ public class Product {
     private String name;
     private String description;
     private double price;
+
+    @Column(columnDefinition ="TEXT")
     private String imageurl;
     private int stock;
 // One Category can have many Products
