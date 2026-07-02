@@ -1,22 +1,22 @@
-// package com.ecommerce.backend;
-// import jakarta.persistence.*;
-// import lombok.Data;
+package com.ecommerce.backend;
+import jakarta.persistence.*;
+import lombok.Data;
 
-// @Entity
-// @Table(name = "users")
-// @Data
+@Entity
+@Table(name = "users")
+@Data
   
-// public class User {
-//     @Id 
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
-//     private String name;
+public class User {
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
 
-//     @Column(unique = true, nullable = false)
-//     private String email;
+    @Column(unique = true, nullable = false)
+    private String email;
     
-//     @Column(nullable = false)
-//     private String password;
+    @Column(nullable = false)
+    private String password;
 
-//     private String role; // "USER" OR "ADMIN"
-// }
+    private String role; // "USER" OR "ADMIN"
+}
