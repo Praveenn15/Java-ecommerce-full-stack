@@ -49,7 +49,9 @@
     filter: invert(1) brightness(2);
   }
 }
-
+*{
+  scroll-behavior: smooth;
+}
 body {
   margin: 0;
 }
