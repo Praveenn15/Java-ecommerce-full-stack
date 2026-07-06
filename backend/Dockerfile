@@ -1,6 +1,7 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 COPY . .
-RUN mvnw clean package -DskipTests
+RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
 
 # Run stage
 FROM eclipse-temurin:21-jre
