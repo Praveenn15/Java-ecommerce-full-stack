@@ -17,7 +17,15 @@ const ForgotPassword = () => {
             setMessage(res.data);
             setStep(2);
         } catch (error) {
-           setMessage(error.response?.data || "Email not found!")
+            console.error(error);
+            const errorData = error.response?.data;
+
+            if (typeof errorData === 'object') {
+                setMessage("Server error : OTP is not going ! Check backend logs!");
+            } else {
+                setMessage(errorData || "Email not found!");
+
+            }
 
         }
     };
