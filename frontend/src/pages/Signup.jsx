@@ -48,7 +48,7 @@ return (
         </div>
         <div style={{marginBottom: "15px"}}>
             <label>Password:</label>
-            <input type="password" name="name" value={formData.password} onChange={handleChange} required style={{width: "100%",padding:"8px",marginTop:"5px"}} />
+            <input type="password" name="password" value={formData.password} onChange={handleChange} required style={{width: "100%",padding:"8px",marginTop:"5px"}} />
         </div>
         <button type="submit" style={{width:"100%",padding:"10px",backgroundColor:"#28a745",color:"white",border:"none",borderRadius:"5px",cursor:"pointer"}}>SignUp</button>
     </form>
