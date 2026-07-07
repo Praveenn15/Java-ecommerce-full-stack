@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import axios from "axios";
 
-const API_URL = 'https://java-ecommerce-full-stack.onrender.com/api/products';
+const API_URL = 'https://java-ecommerce-full-stack.onrender.com';
 
 const ForgotPassword = () => {
     const [email,setEmail] = useState('');
