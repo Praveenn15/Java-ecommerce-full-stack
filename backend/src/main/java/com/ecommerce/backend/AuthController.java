@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.Map;
 import java.util.HashMap;
-// import org.springframework.mail.javamail.JavaMailSender;
-// import org.springframework.mail.SimpleMailMessage;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -20,8 +19,7 @@ public class AuthController {
 
     @Value("${BREVO_API_KEY}")
     private String brevoApiKey;
-    // @Autowired 
-    // private JavaMailSender mailsender;
+    
 
     // A small box to remainder otp..
     private Map<String, String> otpMap = new HashMap<>();
