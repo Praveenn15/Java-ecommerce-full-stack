@@ -96,6 +96,15 @@ public class AuthController {
         bodyMap.put("to", java.util.List.of(java.util.Map.of("email", toEmail)));
         bodyMap.put("subject","Password Reset OTP");
         bodyMap.put("htmlContent", "<html><body><h2>Hello!</h2><p>Your OTP for password reset is : <b>" + otp + "</b></p><body></html>");
+
+
+        //---------------For debug-----------------
+        system.out.println("----Debugging Data Dump----");
+        system.out.printlm("Reciept Email: " + toEmail);
+        system.out.println("OTP value: " + otp);
+        system.out.println("Payload being sent :" + bodyMap.toString());
+        system.out.println("---------")
+        // ----------------------------------
         
         org.springframework.http.HttpEntity<Map<String, Object>> entity  = new org.springframework.http.HttpEntity<>(bodyMap, headers);
         
