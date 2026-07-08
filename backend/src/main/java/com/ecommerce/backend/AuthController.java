@@ -99,11 +99,11 @@ public class AuthController {
 
 
         //---------------For debug-----------------
-        system.out.println("----Debugging Data Dump----");
-        system.out.printlm("Reciept Email: " + toEmail);
-        system.out.println("OTP value: " + otp);
-        system.out.println("Payload being sent :" + bodyMap.toString());
-        system.out.println("---------")
+        System.out.println("----Debugging Data Dump----");
+        System.out.println("Reciept Email: " + toEmail);
+        System.out.println("OTP value: " + otp);
+        System.out.println("Payload being sent :" + bodyMap.toString());
+        System.out.println("---------");
         // ----------------------------------
         
         org.springframework.http.HttpEntity<Map<String, Object>> entity  = new org.springframework.http.HttpEntity<>(bodyMap, headers);
