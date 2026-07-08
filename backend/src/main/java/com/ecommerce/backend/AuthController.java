@@ -92,7 +92,7 @@ public class AuthController {
         headers.set("api-key", brevoApiKey);
 
         Map<String, Object> bodyMap = new HashMap<>();
-        bodyMap.put("sender", java.util.Map.of("name", "E-Commerce App", "email", "praveentkj@gmail.com"));
+        bodyMap.put("sender", java.util.Map.of("name", "E-Commerce App", "email", "custmc4@gmail.com"));
         bodyMap.put("to", java.util.List.of(java.util.Map.of("email", toEmail)));
         bodyMap.put("subject","Password Reset OTP");
         bodyMap.put("htmlContent", "<html><body><h2>Hello!</h2><p>Your OTP for password reset is : <b>" + otp + "</b></p><body></html>");
