@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 
 
 @RestController
@@ -90,14 +91,13 @@ public class AuthController {
 
         headers.set("api-key", brevoApiKey);
 
-        String jsonBody = "{"
-        + "\"sender\":{\"name\"\"E-Commerce App\",\"email\":\"praveentkj@gmail.com\"},"
-        +"\"to\":[{\"email\":\"" + toEmail + "\"}],"
-        +"\"subject\":\"password Reset OTP\","
-        +"\"htmlContent\":\"<h2>Hello!</h2><p>Your OTP for password reset is: <b>" + otp + "</b></p>\""
-        + "}";
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put("sender", java.util.Map.of("name", "E-Commerce App", "email", "praveentkj@gmail.com"));
+        bodyMap.put("to", java.util.List.of(java.util.Map.of("email", toEmail)));
+        bodyMap.put("subject","Password Reset OTP");
+        bodyMap.put("htmlContent", "<html><body><h2>Hello!</h2><p>Your OTP for password reset is : <b>" + otp + "</b></p><body></html>");
         
-        org.springframework.http.HttpEntity<String> entity = new org.springframework.http.HttpEntity<>(jsonBody, headers);
+        org.springframework.http.HttpEntity<Map<String, Object>> entity  = new org.springframework.http.HttpEntity<>(bodyMap, headers);
         
         try {
             restTemplate.postForEntity(url, entity,String.class);
