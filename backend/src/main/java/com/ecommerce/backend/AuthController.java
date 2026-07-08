@@ -1,13 +1,14 @@
 package com.ecommerce.backend;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.Map;
 import java.util.HashMap;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.SimpleMailMessage;
+// import org.springframework.mail.javamail.JavaMailSender;
+// import org.springframework.mail.SimpleMailMessage;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -16,8 +17,11 @@ public class AuthController {
 
     @Autowired // Automatic connection 
     private UserRepository userRepository;
-    @Autowired 
-    private JavaMailSender mailsender;
+
+    @Value("${BREVO_API_KEY}")
+    private String brevoApiKey;
+    // @Autowired 
+    // private JavaMailSender mailsender;
 
     // A small box to remainder otp..
     private Map<String, String> otpMap = new HashMap<>();
@@ -31,11 +35,8 @@ public class AuthController {
         String otp = String.valueOf((int)(Math.random() * 900000) + 100000);                                        
         otpMap.put(email,otp);
 
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo(email);
-        msg.setSubject("Your OTP");
-        msg.setText("OTP is: " + otp);
-        mailsender.send(msg);
+      
+      sendOtpEmail(email, otp);
 
         return ResponseEntity.ok("OTP Sent!");
     };
@@ -80,6 +81,32 @@ public class AuthController {
             }
         }
         return ResponseEntity.status(401).body("Error: Invalid email ");
+    }
+
+    private void sendOtpEmail(String toEmail, String otp){
+        String url = "https://api.brevo.com/v3/smtp/email";
+        org.springframework.web.client.RestTemplate restTemplate = new org.springframework.web.client.RestTemplate();
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+        headers.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
+
+        headers.set("api-key", brevoApiKey);
+
+        String jsonBody = "{"
+        + "\"sender\":{\"name\"\"E-Commerce App\",\"email\":\"praveentkj@gmail.com\"},"
+        +"\"to\":[{\"email\":\"" + toEmail + "\"}],"
+        +"\"subject\":\"password Reset OTP\","
+        +"\"htmlContent\":\"<h2>Hello!</h2><p>Your OTP for password reset is: <b>" + otp + "</b></p>\""
+        + "}";
+        
+        org.springframework.http.HttpEntity<String entity = new org.springframework.http.HttpEntity<>(jsonBody, headers);
+        
+        try {
+            restTemplate.postForEntity(url, entity,String.class);
+            System.out.println( "OTP Email sent successfully via Brevo API!");
+        } catch (Exception e) {
+            System.out.println(" Error sending email via brevo: " + e.getMessage());
+            throw new RuntimeException("Email sending failed: " + e.getMessage());
+        }
     }
 }
 
