@@ -79,7 +79,8 @@ public class AuthController {
             }
         }
         return ResponseEntity.status(401).body("Error: Invalid email ");
-    }
+    
+    };
 
     private void sendOtpEmail(String toEmail, String otp){
         String url = "https://api.brevo.com/v3/smtp/email";
@@ -96,7 +97,7 @@ public class AuthController {
         +"\"htmlContent\":\"<h2>Hello!</h2><p>Your OTP for password reset is: <b>" + otp + "</b></p>\""
         + "}";
         
-        org.springframework.http.HttpEntity<String entity = new org.springframework.http.HttpEntity<>(jsonBody, headers);
+        org.springframework.http.HttpEntity<String> entity = new org.springframework.http.HttpEntity<>(jsonBody, headers);
         
         try {
             restTemplate.postForEntity(url, entity,String.class);
