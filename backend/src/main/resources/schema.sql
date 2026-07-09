@@ -10,3 +10,5 @@ CREATE TABLE IF NOT EXISTS users (
 INSERT INTO users (name, email,password,role)
 VALUES ('Praveen Admin', 'praveen@gmail.com','admin123', 'ADMIN')
 ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO category (name) VALUES ('clothing') ON CONFLICT  (name) DO NOTHING;

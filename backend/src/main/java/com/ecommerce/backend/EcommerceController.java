@@ -42,4 +42,9 @@ public class EcommerceController{
         productRepository.deleteById(id);
         return ResponseEntity.ok("Product Deleted Successfully");
     }
+
+    @GetMapping("/ping")
+    public String ping() {
+        return "Server is awake!";
+    }
 }

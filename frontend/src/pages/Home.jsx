@@ -191,7 +191,15 @@ function Home() {
                            <p style={{fontSize:"14px",color:"#666",minHeight:"40px"}}>{product.desc}</p>
                            <p style={{fontSize:"20px",color:"#28a745",fontWeight:"bold",margin:"15px 0"}}>{product.price}</p>
                         </div>  
-                        <div style={{display:"flex",flexDirection:"column",gap:"10px"}}>
+                        
+                        {user && user.role === 'ADMIN' ?(
+
+                              <button onClick={() => handleDelete(product.id)} style={{width: "100%", padding:"10px",backgroundColor:"#28a745", color:"white",border:"none",borderRadius:"5px",cursor:"pointer",fontWeight:"600"}}>
+                              Delete Product
+                           </button>            
+                           ) :(
+                              <>
+
                            {/*Add to cart button*/}
                            <button onClick= {() => handleAddToCart(product)} style={{width:"100%",padding:"10px",backgroundColor:"#ffc107",color:"#333",border:"none",borderRadius:"5px",cursor:"pointer",fontWeight:"600"}}>
                               Add to cart
@@ -200,15 +208,13 @@ function Home() {
                            {/* Buy now btn- Only for login users */}
                            <button onClick={() => handleBuyNow(product.name)} style={{width: "100%", padding:"10px",backgroundColor:"#28a745", color:"white",border:"none",borderRadius:"5px",cursor:"pointer",fontWeight:"600"}}>
                               Buy Now
-                           </button>           
-                           {user && user.role === 'ADMIN' && (
-
-                              <button onClick={() => handleDelete(product.id)} style={{width: "100%", padding:"10px",backgroundColor:"#28a745", color:"white",border:"none",borderRadius:"5px",cursor:"pointer",fontWeight:"600"}}>
-                              Delete Product
-                           </button>            
-                           )} 
+                           </button>  
+                           </>
+                           
+                  )}         
+                          
                         </div>
-                     </div>
+                     
 
                   ))}
                </div>    )}
