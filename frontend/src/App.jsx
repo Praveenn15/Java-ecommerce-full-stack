@@ -15,13 +15,20 @@ function App() {
       useEffect(() => {
           const handleOnline = () => setIsOffline(false);
           const handleOffline = () => setIsOffline(true);
-  
+
+          const handleGlobalClick = () => {
+            if (!navigator.onLine) {
+              setIsOffline(true);
+            }
+          };  
           window.addEventListener('online', handleOnline);
           window.addEventListener('offline',handleOffline);
+          window.addEventListener('click',handleGlobalClick);
   
           return () => {
               window.removeEventListener('online',handleOnline);
               window.removeEventListener('offline',handleOffline);
+              window.removeEventListener('click',handleGlobalClick);
           };
       }, [])
   

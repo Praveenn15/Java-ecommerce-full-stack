@@ -148,7 +148,7 @@ function Home() {
       </div>
 
                         {/*........ Live search bar -*/}
-      <div style={{ marginTop:"20px",}}>
+      <div style={{ marginTop:"20px"}}>
          <input 
          type="text" placeholder="🔍 Seach Products here.." value={search} onChange={(e) => setSearch(e.target.value)} style={{width:"100%",padding:"12px",borderRadius:"8px",border:"1px solid #ccc",boxSizing:"border-box",fontSize:"16px"}}/>
       </div>  
