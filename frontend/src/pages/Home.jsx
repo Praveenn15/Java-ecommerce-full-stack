@@ -1,6 +1,8 @@
 import React,{useState,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { DotLottie, DotLottieReact } from '@lottiefiles/dotlottie-react';
+
 
 const API_URL = 'https://java-ecommerce-full-stack.onrender.com/api/products';
 
@@ -15,6 +17,8 @@ function Home() {
 
      const [products,setProducts]= useState([]);
      const [search,setSearch] = useState('');
+
+     
      const[showAdminForm,setshowAdminForm] =useState(false);
 
      const [form, setForm] = useState({
@@ -158,7 +162,7 @@ function Home() {
          <form onSubmit={handleAddProduct} style={{display:"flex",flexDirection:"column",gap:"12px",padding:"20px",border:"1px solid #ddd", borderRadius:"10px",backgroundColor:"#fff",boxShadow: `0 4px 6px rgba(0,0,0,0.05)`,marginTop:"20px",maxWidth:"500px"}}>
             <h3 style={{margin:"0 0 10px 0",color: "#007bff" }}>Add New Product to Database</h3>
             <input type="text" placeholder="Product name" name="name" value={form.name} onChange={handleChange} required style={{padding:"10px",borderRadius:"5px",border:"1px solid #ccc"}} />
-            <input type="text" placeholder="Product name" name="description" value={form.description} onChange={handleChange} required style={{padding:"10px",borderRadius:"5px",border:"1px solid #ccc"}} />
+            <input type="text" placeholder="Product description" name="description" value={form.description} onChange={handleChange} required style={{padding:"10px",borderRadius:"5px",border:"1px solid #ccc"}} />
             <input type="number" placeholder="Price" name="price" value={form.price} onChange={handleChange} required style={{padding:"10px",borderRadius:"5px",border:"1px solid #ccc"}} />
             <input type="number" placeholder="Stock" name="stock" value={form.stock} onChange={handleChange} required style={{padding:"10px",borderRadius:"5px",border:"1px solid #ccc"}} />
             <input type="file" accept="image/*"   onChange={handleFileChange} required style={{padding:"10px",borderRadius:"5px",border:"1px solid #ccc"}} />
