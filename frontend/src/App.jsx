@@ -16,19 +16,21 @@ function App() {
           const handleOnline = () => setIsOffline(false);
           const handleOffline = () => setIsOffline(true);
 
-          const handleGlobalClick = () => {
+          const handleGlobalClick = (e) => {
             if (!navigator.onLine) {
+              e.stopPropagation();
+              e.preventDefault();
               setIsOffline(true);
             }
           };  
           window.addEventListener('online', handleOnline);
           window.addEventListener('offline',handleOffline);
-          window.addEventListener('click',handleGlobalClick);
+          window.addEventListener('click',handleGlobalClick,true);
   
           return () => {
               window.removeEventListener('online',handleOnline);
               window.removeEventListener('offline',handleOffline);
-              window.removeEventListener('click',handleGlobalClick);
+              window.removeEventListener('click',handleGlobalClick,true);
           };
       }, [])
   
