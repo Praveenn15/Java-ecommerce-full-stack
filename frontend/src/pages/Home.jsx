@@ -1,19 +1,18 @@
 import React,{useState,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { DotLottie, DotLottieReact } from '@lottiefiles/dotlottie-react';
+
 
 
 const API_URL = 'https://java-ecommerce-full-stack.onrender.com/api/products';
 
 
-function Home() {
+function Home({cart,addToCart}) {
      const navigate = useNavigate();
 
      //Getting login user data from local stoge
      const user = JSON.parse(localStorage.getItem("user"));
 
-     const [cart,setCart] = useState([]);
 
      const [products,setProducts]= useState([]);
      const [search,setSearch] = useState('');
@@ -102,10 +101,6 @@ function Home() {
             };
          
       
-     const handleAddToCart = (product) => {
-        setCart([...cart, product]);
-        alert(` ${product.name} added to the cart!`);
-     };
 
      //..! LOGIN required...for buying anything..
      const handleBuyNow = (productName) => {
@@ -128,7 +123,8 @@ function Home() {
             <h2 style={{margin:"0",color:"#333"}}>My-ecommmerce store</h2>
             <div style={{display:"flex",alignItems:"center",gap:"20px"}}>
                {/* Cart count */}
-               <span style={{fontSize:"16px",fontWeight:"600",color:"#555" }}>
+               <span onClick={() => navigate('/cart')} style={{fontSize:"16px",fontWeight:"600",color:"#555" }}>
+
                   cart ({cart.length})
                </span>
 
@@ -185,9 +181,13 @@ function Home() {
                <div style={{display:"flex",flexWrap:"wrap",gap:"25px",marginTop:"20px"}}>
                   {products.map((product) => (
                      <div key={product.id} style={{border:"1px solid #e0e0e0",padding:"20px",borderRadius:"10px",width:"260px",  backgroundColor:"white",boxShadow:" 0 4px 6px rgba(0,0,0,0.02)",display:"flex",flexDirection:"column",justifyContent:"space-between"}}>
-                        <img 
+                     <img 
                         src={product.imageurl || 'https://via.placeholder.com/200?text=No+Image'}
                         alt={product.name}
+                        onClick={() => {
+                           addToCart(product);
+                           navigate('/cart')
+                        }}
                         style={{width:"100%",height:'180px',objectFit:"cover",borderRadius:'10px',width:"250px",display:"flex",flexDirection:"column",justifyContent:"space-between",backgroundColor:"#fff",boxShadow:"0 2px 8px rgba(0,0,0,0.06"}}/>
 
                         <div>
@@ -205,7 +205,8 @@ function Home() {
                               <>
 
                            {/*Add to cart button*/}
-                           <button onClick= {() => handleAddToCart(product)} style={{width:"100%",padding:"10px",backgroundColor:"#ffc107",color:"#333",border:"none",borderRadius:"5px",cursor:"pointer",fontWeight:"600"}}>
+                           <button onClick= {() => {   addToCart(product);
+                           alert(`${product.name} added to cart `); }} style={{width:"100%",padding:"10px",backgroundColor:"#ffc107",color:"#333",border:"none",borderRadius:"5px",cursor:"pointer",fontWeight:"600"}}>
                               Add to cart
                            </button>
                            
