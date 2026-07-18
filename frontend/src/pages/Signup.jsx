@@ -35,18 +35,21 @@ function Signup() {
     }
 };
 return (
- <div style={{maxWidth: "400px",margin: "50px auto",padding:"20px", border: "1px solid #ccc",borderRadius: "8px"}}>
+   <div  className="page-container">
+    <video autoPlay = {true} muted= {true} loop = {true} playsInline= {true} className="bg-video">
+            <source src="/space.mp4" type="video/mp4" />
+        </video>
     <h2>Sign Up</h2>
-    <form onSubmit={handleSubmit}>
-        <div style={{marginBottom: "15px"}}>
+    <form className="page-wrapper" onSubmit={handleSubmit}>
+        <div  className="input-grp">
             <label>Full Name:</label>
             <input type="text" name="name" value={formData.name} onChange={handleChange} required style={{width: "100%",padding:"8px",marginTop:"5px"}} />
         </div>
-        <div style={{marginBottom: "15px"}}>
+        <div  className="input-grp">
             <label>Email:</label>
             <input type="email" name="email" value={formData.email} onChange={handleChange} required style={{width: "100%",padding:"8px",marginTop:"5px"}} />
         </div>
-        <div style={{marginBottom: "15px"}}>
+        <div  className="input-grp">
             <label>Password:</label>
             <input type="password" name="password" value={formData.password} onChange={handleChange} required style={{width: "100%",padding:"8px",marginTop:"5px"}} />
         </div>

@@ -2,8 +2,9 @@ import React, {useState} from "react";
 import axios from "axios";
 import { useNavigate,Link,Form } from "react-router-dom";
 
-function Login(){
 
+
+function Login(){
 
 const [formData,setFormData] = useState ({
     email: "",
@@ -33,28 +34,36 @@ if (response.status === 200 || response.status === 201) {
     };
     
 return(
-      <div style={{maxWidth: "400px",margin: "50px auto",padding:"20px", border: "1px solid #ccc",borderRadius: "8px"}}>
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
-            <div style={{marginTop:"15px"}}>
+    
+
+     
+
+        <div  className="page-container">
+        <video autoPlay = {true} muted= {true} loop = {true} playsInline= {true} className="bg-video">
+            <source src="/space.mp4" type="video/mp4" />
+        </video>
+          <h2>Login</h2>
+
+         <form onSubmit={handleSubmit} className="page-wrapper">
+            <div  className="input-grp">
                 <label>User Email:</label>
                 <input type="email" name="email" value={formData.email} onChange={handleChange} required style={{width:"100%", padding:"8px",marginTop:"5px"}} /> 
             </div>
         
-            <div style={{marginTop:"15px"}}>
+            <div  className="input-grp">
                 <label>User Password:</label>
                 <input type="password" name="password" value={formData.password} onChange={handleChange} required style={{width:"100%", padding:"8px",marginTop:"5px"}} /> 
             </div>
             <a href="/forgot-password" style={{color:"#007bff",textDecoration:"none",fontSize:"14px"}}>Forgot Password?</a>
 
              <button type="submit" style={{width:"100%",padding:"10px",backgroundColor:"#28a745",color:"white",border:"none",borderRadius:"5px",cursor:"pointer"}}>Login </button>       
-        </form>
-        <p style={{marginTop:"15px" , textAlign:"center"}}>
-            Dont have an account ? <Link to="/signup"> Sign-in here</Link>
-        </p>
-        
+          <p style={{marginTop:"15px" , textAlign:"center"}}>
+            Dont have an account ? <Link to="/signup" style={{textDecoration:"none",color:"#007bff"}}> Sign-in here</Link>
+           </p>
+          </form>
      </div>
-
+ 
+    
 );
 }
 export default Login;

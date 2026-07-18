@@ -47,4 +47,19 @@ public class EcommerceController{
     public String ping() {
         return "Server is awake!";
     }
+
+    @PutMapping("/products/{id}/update-stock")
+    public ResponseEntity<?> updateStock(@PathVariable Long id, @RequestParam int stock) {
+        try {
+            Product product = productRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Product not found"));
+
+            product.setStock(stock);
+            productRepository.save(product);
+
+            return ResponseEntity.ok("Stock updated succefully");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
+    }
 }

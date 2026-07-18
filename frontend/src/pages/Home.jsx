@@ -99,6 +99,37 @@ function Home({cart,addToCart}) {
                }
                }
             };
+           
+      const handleUpdateStock = async (productId, currentStock) => {
+         const newStock = promt("Enter new stock quabtity: ", currentStock);
+         
+         if (newStock == null || newStock === "") return;
+
+         if(isNaN(newStock) || parseInt(newStock) < 0) {
+            alert(" Please enter valid number!");
+            return;
+         }
+         try {
+            const response = await fetch(`${API_URL}/api/products/${productId}/update-stock?stock=${parseInt(newStock)}`, {
+               method: 'PUT',
+               headers: {
+                  'content-type': 'application/json'
+               }
+            });
+            
+            if (response.ok) {
+               alert(" Stock updated succesfully!");
+               window.location.reload();
+            } else{
+               alert(" Failed to update stock on server");
+            } 
+         }
+         catch (error) {
+               console.error(" Error updating stock:", error);
+               alert("Server error while updating stock");
+            }
+         }
+      
          
       
 
@@ -123,10 +154,13 @@ function Home({cart,addToCart}) {
             <h2 style={{margin:"0",color:"#333"}}>My-ecommmerce store</h2>
             <div style={{display:"flex",alignItems:"center",gap:"20px"}}>
                {/* Cart count */}
-               <span onClick={() => navigate('/cart')} style={{fontSize:"16px",fontWeight:"600",color:"#555" }}>
+               {(!user || user.role !== 'ADMIN') && (
+
+                  <span onClick={() => navigate('/cart')} style={{fontSize:"16px",fontWeight:"600",color:"#555" }}>
 
                   cart ({cart.length})
                </span>
+               )}
 
                {/* login /logout dynamic*/}
                {user ? (
@@ -178,7 +212,7 @@ function Home({cart,addToCart}) {
                {products.length === 0 ? <p style={{color:"#888",textAlign:"center"}}>No Products found..</p>:(
 
                
-               <div style={{display:"flex",flexWrap:"wrap",gap:"25px",marginTop:"20px"}}>
+               <div style={{display:"flex",flexWrap:"wrap",gap:"25px",marginTop:"20px",justifyContent:"center"}}>
                   {products.map((product) => (
                      <div key={product.id} style={{border:"1px solid #e0e0e0",padding:"20px",borderRadius:"10px",width:"260px",  backgroundColor:"white",boxShadow:" 0 4px 6px rgba(0,0,0,0.02)",display:"flex",flexDirection:"column",justifyContent:"space-between"}}>
                      <img 
@@ -192,8 +226,29 @@ function Home({cart,addToCart}) {
 
                         <div>
                            <h4 style={{ margin: "0 0 10px 0",color:"#222",fontSize:"18px"}}>{product.name}</h4>
-                           <p style={{fontSize:"14px",color:"#666",minHeight:"40px"}}>{product.desc}</p>
-                           <p style={{fontSize:"20px",color:"#28a745",fontWeight:"bold",margin:"15px 0"}}>{product.price}</p>
+                           <p style={{fontSize:"14px",color:"#666",minHeight:"40px"}}>{product. description}</p>
+                           <p style={{fontSize:"20px",color:"#28a745",fontWeight:"bold",margin:"15px 0"}}>${product.price}</p>
+
+                           {user && user.role === 'ADMIN' && (
+                              <div style={{margin:'10px 0', padding:"8px",borderRadius:"6px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+
+                              <P style={{fontSize:'15px',color:"#555",fontWeight:'600',margin:"5px 0"}}>
+                                 Stock Available: <span style={{color:product.stock > 0 ? "#28a745" : '#dc3545'}}> {product.stock} items</span>
+                              </P>
+                              <button onClick={() => handleUpdateStock(product.id, product.stock)} style={{
+                                 padding:"4px 8px",
+                                 fontSize:"12px",
+                                 backgroundColor:"#007bff",
+                                 color:"white",
+                                 border:"none",
+                                 borderRadius:'4px',
+                                 cursor:"pointer",
+                                 fontWeight:"bold"
+                              }}>
+                              Edit stock
+                              </button>
+                              </div>
+                           )}
                         </div>  
                         
                         {user && user.role === 'ADMIN' ?(

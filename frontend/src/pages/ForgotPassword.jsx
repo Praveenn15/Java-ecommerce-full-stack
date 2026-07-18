@@ -41,26 +41,35 @@ const ForgotPassword = () => {
         }
     };
     return (
-        <div style={{maxWidth:"400px",margin:"50px auto",padding:"20px", border:"1px solid #ccc",borderRadius:"8px"}} >
+        
+        <div  className="page-container">
+        <video autoPlay = {true} muted= {true} loop = {true} playsInline= {true} className="bg-video">
+            <source src="/pink.mp4" type="video/mp4" />
+        </video>
             <h2 style={{textAlign:"center"}}> Forgot Password</h2>
             {message && <p style={{textAlign:"center",color:"blue",fontWeight:"bold"}}>{message}</p>}
             {step === 1 ? (
-                <form onSubmit={handleSendOtp}>
+                <form className="page-wrapper" onSubmit={handleSendOtp}>
+                     <div  className="input-grp">
                     <label>Enter your reset email:</label>
                     <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} style={{width:"100%",padding:"8px",margin:"10px 0"}} />
                     <button type="submit" style={{width:"100%",padding:"10px",backgroundColor:"#007bff",color:'white',border:"none",cursor:"pointer"}}>Send OTP</button>
+                     </div>
                 </form>
 
             ) :(
-                <form onSubmit={handleResetPassword}>
+                <form className="page-wrapper" onSubmit={handleResetPassword}>
+                     <div  className="input-grp">
                     <label> Enter OTP</label>
                     <input type="text" required value={otp} onChange={(e) => setOtp(e.target.value)} style={{width:"100%",padding:"8px",margin:"10px 0"}} />
                     <label>Enter new password</label>
                     <input type="password" required value={newPassword} onChange={(e) => setNewPassword(e.target.value)} style={{width:"100%",padding:"8px",margin:"10px 0"}} />
                     <button type="submit" style={{width:"100%",padding:"10px",backgroundColor:"#2a8745",color:'white',border:"none",cursor:"pointer"}}>Update password</button>
+                     </div>
                 </form>
             )}
         </div>
+        
     );
 };
 export default ForgotPassword;
