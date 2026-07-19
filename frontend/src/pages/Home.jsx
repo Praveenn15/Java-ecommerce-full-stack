@@ -110,7 +110,7 @@ function Home() {
                   return;
                }
                try {
-                  const response = await fetch(`${API_URL}/api/products/${productId}/update-stock?stock=${parseInt(newStock)}`, {
+                  const response = await fetch(`${API_URL}/${productId}/update-stock?stock=${parseInt(newStock)}`, {
                      method: 'PUT',
                      headers: {
                         'content-type': 'application/json'
@@ -217,10 +217,10 @@ function Home() {
                         <div>
                            <h4 style={{ margin: "0 0 10px 0",color:"#222",fontSize:"18px"}}>{product.name}</h4>
                            <p style={{fontSize:"14px",color:"#666",minHeight:"40px"}}>{product.desc}</p>
-                           <p style={{fontSize:"20px",color:"#28a745",fontWeight:"bold",margin:"15px 0"}}>💗💟💰{product.price}</p>
+                           <p style={{fontSize:"20px",color:"#28a745",fontWeight:"bold",margin:"15px 0"}}>💰{product.price}</p>
                            {user && user.role === 'ADMIN' && (
                               <div style={{margin:"10px 0",padding:"8px",borderRadius:"6px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                                 <p style={{margin:"5px 0"}}>Stock available: <span style={{color:product.stock > 0 ? "#28a745" : "#dc3545"}}> {product.stock}items</span></p>
+                                 <p style={{margin:"5px 0"}}>Stock available: 💟 <span style={{color:product.stock > 0 ? "#28a745" : "#dc3545"}}> {product.stock}items</span></p>
                                  <button onClick={() => handleUpdateStock(product.id, product.stock)} style={{padding:"4px 8px",fontSize:"12px",backgroundColor:"#007bff",color:"white",border:"none",borderRadius:"4px",cursor:"pointer"}}>Edit stock</button>
 
                               </div>
@@ -239,7 +239,7 @@ function Home() {
                            <button onClick= {() => {addToCart(product);
                            alert(`${product.name} added to cart `);
                             }} style={{width:"100%",padding:"10px",backgroundColor:"#ffc107",color:"#333",border:"none",borderRadius:"5px",cursor:"pointer",fontWeight:"600"}}>
-                              Add to cart
+                             💟 Add to cart
                            </button>
                                           {/* Cart count */}
                <span onClick={() => navigate('/cart')} style={{fontSize:"16px",fontWeight:"600",color:"#555" }}>
