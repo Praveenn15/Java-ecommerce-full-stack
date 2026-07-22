@@ -7,7 +7,7 @@ import axios from "axios";
 const API_URL = 'https://java-ecommerce-full-stack.onrender.com/api/products';
 
 
-function Home() {
+function Home({cart,addToCart}) {
      const navigate = useNavigate();
 
      //Getting login user data from local stoge
