@@ -1,19 +1,51 @@
-import React   ,{useState}from "react";
+
 import { BrowserRouter as Router, Routes,Route } from "react-router-dom";
 import './App.css'
  
  
 
-import Home from "./pages/Home";
-import Signup from "./pages/Signup"
-import Login from "./pages/Login";
-import ForgotPassword from "./pages/ForgotPassword";
-import Cart from "./pages/Cart";
+
+import Loader from "./components/Loader";
+import React,{Suspense, lazy, useEffect, useState} from "react";
+
+const Home = lazy(() => import ('./pages/Home'));
+const Signup = lazy(() => import ('./pages/Signup'));
+const Login = lazy(() => import ('./pages/Login'));
+const ForgotPassword = lazy(() => import ('./pages/ForgotPassword'));
+const Cart = lazy(() => import ('./pages/Cart'));
+
+const API_URL = 'https://java-ecommerce-full-stack.onrender.com/api/products';
 
 
 function App() {
-  
+
+  const [isLoading,setIsLoading] = useState(true);
+  const [products,setProducts] = useState([]);
   const [cart,setCart] = useState([]);
+
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+
+    
+    try {
+      const response = await fetch(`${API_URL}`);
+      const data = await response.json();
+
+      setProducts(data);
+    } catch (error) {
+      console.error("Data fetching error",error);
+    } finally {
+      setIsLoading(false)
+    }
+  };
+fetchInitialData();
+  },[]);
+  if (isLoading) {
+    return <Loader />;
+  }
+  
+  
 
   const addToCart = (product) => {
     setCart((prevCart) => {
@@ -37,7 +69,7 @@ function App() {
   };
   return (
   <Router>
-      
+      <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Home cart= {cart} addToCart={addToCart} />} />
         <Route path="/cart" element = { <Cart cart ={cart} updateQuantity={updateQuantity} />} />
@@ -45,6 +77,7 @@ function App() {
         <Route path="/signup" element={<Signup/>} />
         <Route path="/forgot-password" element ={<ForgotPassword/>} />
       </Routes>
+      </Suspense>
       
     </Router>
   );
