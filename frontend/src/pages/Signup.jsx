@@ -36,9 +36,7 @@ function Signup() {
 };
 return (
    <div  className="page-container">
-    <video autoPlay = {true} muted= {true} loop = {true} playsInline= {true} className="bg-video">
-            <source src="/space.mp4" type="video/mp4" />
-        </video>
+    
     <h2>Sign Up</h2>
     <form className="page-wrapper" onSubmit={handleSubmit}>
         <div  className="input-grp">

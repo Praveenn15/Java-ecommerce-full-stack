@@ -43,9 +43,7 @@ const ForgotPassword = () => {
     return (
         
         <div  className="page-container">
-        <video autoPlay = {true} muted= {true} loop = {true} playsInline= {true} className="bg-video">
-            <source src="/pink.mp4" type="video/mp4" />
-        </video>
+        
             <h2 style={{textAlign:"center"}}> Forgot Password</h2>
             {message && <p style={{textAlign:"center",color:"blue",fontWeight:"bold"}}>{message}</p>}
             {step === 1 ? (

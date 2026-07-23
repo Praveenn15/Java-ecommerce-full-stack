@@ -39,9 +39,7 @@ return(
      
 
         <div  className="page-container">
-        <video autoPlay = {true} muted= {true} loop = {true} playsInline= {true} className="bg-video">
-            <source src="/space.mp4" type="video/mp4" />
-        </video>
+       
           <h2>Login</h2>
 
          <form onSubmit={handleSubmit} className="page-wrapper">
