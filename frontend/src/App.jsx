@@ -71,7 +71,7 @@ fetchInitialData();
       <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Home cart= {cart} addToCart={addToCart} />} />
-        <Route path="/cart" element = { <Cart cart ={cart} updateQuantity={updateQuantity} />} />
+        <Route path="/cart" element = { <Cart cart ={cart} updateQuantity={updateQuantity} products={products} addToCart={addToCart} />} />
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Signup/>} />
         <Route path="/forgot-password" element ={<ForgotPassword/>} />
