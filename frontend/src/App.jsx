@@ -22,12 +22,11 @@ function App() {
   const [isLoading,setIsLoading] = useState(true);
   const [products,setProducts] = useState([]);
   const [cart,setCart] = useState([]);
-
+  
 
   useEffect(() => {
     const fetchInitialData = async () => {
 
-    
     try {
       const response = await fetch(`${API_URL}`);
       const data = await response.json();
