@@ -150,6 +150,14 @@ function Home({cart,addToCart}) {
          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:"2px solid #e0e0e0",paddingBottom:"15px",backgroundColor:"white",padding:"15px 20px ",borderRadius:"8px",boxShadow:"0 2px 4px rgba(0,0,0,0.5"}} >
             <h2 style={{margin:"0",color:"#333"}}>My-ecommmerce store</h2>
             <div style={{display:"flex",alignItems:"center",gap:"20px"}}>
+                {/* Cart count */}
+               {(!user || user.role !== 'ADMIN') && (
+
+                  <span onClick={() => navigate('/cart')} style={{fontSize:"16px",fontWeight:"600",color:"#555" }}>
+
+                  cart ({ cart ? cart.length : 0})
+               </span>
+               )}
 
 
                {/* login /logout dynamic*/}
@@ -159,12 +167,14 @@ function Home({cart,addToCart}) {
                         <button onClick={() => setshowAdminForm(!showAdminForm)}
                         style={{padding:"8px 15px",backgroundColor:"#ffc107",color:"black",border:"none",borderRadius:"5px",cursor:"pointer",fontWeight:"bold",marginRight:"10px"}}>{showAdminForm ? " Close Form":"👑Add Product form"}</button>
                      )}
+                     
                      <span style={{ fontWeight:"bold",color:"#007bff"}}>Hello,{user.name}</span>
                      <button onClick={handleLogout} style={{ padding:"8px 15px",backgroundColor:"#dc3545",color:"white",border:"none",borderRadius:"5px",cursor:"pointer",fontWeight:"600"}}>
                         Logout
                      </button>
                   </div>
                ):(
+                  
                   <button onClick={() => navigate("/login")} style={{padding:"8px 15px",backgroundColor:"#007bff",color:"white",border:"none",borderRadius:"5px",cursor:"pointer",fontWeight:"600"}}>Login</button>
 
                )}
@@ -241,11 +251,7 @@ function Home({cart,addToCart}) {
                             }} style={{width:"100%",padding:"10px",backgroundColor:"#ffc107",color:"#333",border:"none",borderRadius:"5px",cursor:"pointer",fontWeight:"600"}}>
                              💟 Add to cart
                            </button>
-                                          {/* Cart count */}
-               <span onClick={() => navigate('/cart')} style={{fontSize:"16px",fontWeight:"600",color:"#555" }}>
-
-                  cart ({cart.length})
-               </span>
+                                         
                            
                            {/* Buy now btn- Only for login users */}
                            <button onClick={() => handleBuyNow(product.name)} style={{width: "100%", padding:"10px",backgroundColor:"#28a745", color:"white",border:"none",borderRadius:"5px",cursor:"pointer",fontWeight:"600"}}>
